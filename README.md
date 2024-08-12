@@ -1,2 +1,2 @@
-# spotify-clone-
+# spotify-clone
 simple spotify-clone web app based on django
