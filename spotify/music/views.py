@@ -129,8 +129,10 @@ def artist_top_tracks(request):
         artist_name = albums_item['artists'][0]['name']
         artist_uri = albums_item['artists'][0]['uri']
 
+        # image
+
         for image in albums_item['images']:
-                if image['height'] == 640:
+                if image['height'] == 300:
                     artist_image = image['url']
                     break
     else:
@@ -141,7 +143,8 @@ def artist_top_tracks(request):
         'albums': albums,
         'artist_name': artist_name,
         'artist_uri': artist_uri,
-        'artist_image': artist_image
+        'artist_image': artist_image,
+        'albums_item': albums_item
     })
 
 
