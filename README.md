@@ -1,7 +1,7 @@
 # spotify-clone
 simple spotify-clone web app based on django
 
-# Installation 
+# How to Installation
 
 ## Prerequisites
 
@@ -9,15 +9,13 @@ simple spotify-clone web app based on django
 
 ## Setting Up the Conda Environment
 
-### 1. Clone the Repository
-
-First, clone the repository to your local machine:
+### 1. Clone the Repository 
 
 ```bash
 git clone https://github.com/KeennyyW/spotify-clone.git
 ```
 
-### 2. Create and activate Environment 
+### 2. Create and activate Virtual Environment 
 
 ```bash
 conda create --name <env_name>
@@ -36,3 +34,11 @@ pip install -r requirements.txt
 cd spotify
 python manage.py runserver
 ```
+
+
+
+Project still in development 
+
+
+
+
