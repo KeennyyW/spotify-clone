@@ -1,0 +1,19 @@
+asgiref==3.8.1
+certifi==2024.7.4
+charset-normalizer==3.3.2
+Django==5.1
+django-environ==0.11.2
+djangorestframework==3.15.2
+idna==3.7
+psycopg2==2.9.9
+PyMySQL==1.1.1
+python-dotenv==1.0.1
+redis==5.0.8
+requests==2.32.3
+setuptools==72.1.0
+spotipy==2.24.0
+sqlparse @ file:///C:/Users/dev-admin/perseverance-python-buildout/croot/sqlparse_1699544474746/work
+tailwind==3.1.5b0
+tzdata @ file:///croot/python-tzdata_1690578112552/work
+urllib3==2.2.2
+wheel==0.43.0
