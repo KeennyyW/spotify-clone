@@ -20,7 +20,10 @@ import sys
 
 # @login_required(login_url="login")
 def index(request):
-    return render(request, "music/index.html")
+
+    album_data = latest_albums()
+
+    return render(request, "music/index.html", album_data)
 
 
 def login(request):
@@ -115,7 +118,7 @@ def artist_top_tracks(request):
     # Fetch New album releases
 
     try:
-        response_new_releases = sp.new_releases(limit=5)
+        response_new_releases = sp.new_releases(limit=10)
     except Exception as e:
         
         messages.info(request, "Failed to fetch album releases")
@@ -125,6 +128,8 @@ def artist_top_tracks(request):
     
     if albums:
         
+        #artist 1
+
         albums_item = albums[0]
         artist_name = albums_item['artists'][0]['name']
         artist_uri = albums_item['artists'][0]['uri']
@@ -135,6 +140,55 @@ def artist_top_tracks(request):
                 if image['height'] == 300:
                     artist_image = image['url']
                     break
+
+
+        #artist 2
+
+        albums_item_1 = albums[1]
+        artist_name_1 = albums_item_1['artists'][0]['name']
+        artist_uri_1 = albums_item_1['artists'][0]['uri']
+        
+        for image in albums_item_1['images']:
+                if image['height'] == 300:
+                    artist_image_1 = image['url']
+                    break
+
+        #artist 3
+
+        albums_item_2 = albums[2]
+        artist_name_2 = albums_item_2['artists'][0]['name']
+        artist_uri_2 = albums_item_2['artists'][0]['uri']
+
+        # image
+
+        for image in albums_item_2['images']:
+                if image['height'] == 300:
+                    artist_image_2 = image['url']
+                    break
+
+
+        #artist 4
+
+        albums_item_3 = albums[3]
+        artist_name_3 = albums_item_3['artists'][0]['name']
+        artist_uri_3 = albums_item_3['artists'][0]['uri']
+        
+        for image in albums_item_3['images']:
+                if image['height'] == 300:
+                    artist_image_3 = image['url']
+                    break
+
+        #artist 5
+
+        albums_item_4 = albums[4]
+        artist_name_4 = albums_item_4['artists'][0]['name']
+        artist_uri_1 = albums_item_4['artists'][0]['uri']
+        
+        for image in albums_item_4['images']:
+                if image['height'] == 300:
+                    artist_image_4 = image['url']
+                    break
+
     else:
         artist_name = ''
 
@@ -144,52 +198,119 @@ def artist_top_tracks(request):
         'artist_name': artist_name,
         'artist_uri': artist_uri,
         'artist_image': artist_image,
-        'albums_item': albums_item
+        'albums_item': albums_item,
+        'albums_item_1': albums_item_1, 'artist_name_1': artist_name_1, 'artist_image_1': artist_image_1,
+        'albums_item_1': albums_item_2, 'artist_name_2': artist_name_2, 'artist_image_2': artist_image_2,
+        'albums_item_1': albums_item_3, 'artist_name_3': artist_name_3, 'artist_image_3': artist_image_3,
+        'albums_item_1': albums_item_4, 'artist_name_4': artist_name_4, 'artist_image_4': artist_image_4,
     })
 
 
 
+def latest_albums():
+    sp = get_spotify_client()
+    album_data = {}
 
 
+    # Fetch New album releases
+
+    try:
+        response_new_releases = sp.new_releases(limit=10)
+    except Exception as e:
+        pass
+        #messages.info(request, "Failed to fetch album releases")
+
+    
+    albums = response_new_releases.get('albums', {}).get('items', [])
 
 
-# tree = {
-#     'href': 'https://api.spotify.com/v1/browse/new-releases?offset=0&limit=1',
-#     'items': [
-#         {
-#             'album_type': 'album',
-#             'artists': [
-#                 {
-#                     'external_urls': {'spotify': 'https://open.spotify.com/artist/6CP5wWvO8oIxedESJNCN4H'},
-#                     'href': 'https://api.spotify.com/v1/artists/6CP5wWvO8oIxedESJNCN4H',
-#                     'id': '6CP5wWvO8oIxedESJNCN4H',
-#                     'name': 'Ski Aggu',
-#                     'type': 'artist',
-#                     'uri': 'spotify:artist:6CP5wWvO8oIxedESJNCN4H'
-#                 }
-#             ],
-#             'available_markets': ['AT', 'CH', 'DE'],
-#             'external_urls': {'spotify': 'https://open.spotify.com/album/1qGEpCF1NA9ToIocKI4xVK'},
-#             'href': 'https://api.spotify.com/v1/albums/1qGEpCF1NA9ToIocKI4xVK',
-#             'id': '1qGEpCF1NA9ToIocKI4xVK',
-#             'images': [
-#                 {
-#                       'height': 300, 'url': 'https://i.scdn.co/image/ab67616d00001e02ec72528d208817b039aabfda', 'width': 300},
-#                 {'height': 64, 'url': 'https://i.scdn.co/image/ab67616d00004851ec72528d208817b039aabfda', 'width': 64},
-#                 {'height': 640, 'url': 'https://i.scdn.co/image/ab67616d0000b273ec72528d208817b039aabfda', 'width': 640}
-#             ],
-#             'name': 'Wilmersdorfs Kind',
-#             'release_date': '2024-08-30',
-#             'release_date_precision': 'day',
-#             'total_tracks': 16,
-#             'type': 'album',
-#             'uri': 'spotify:album:1qGEpCF1NA9ToIocKI4xVK'
-#         }
-#     ],
-#     'limit': 1,
-#     'next': 'https://api.spotify.com/v1/browse/new-releases?offset=1&limit=1',
-#     'offset': 0,
-#     'previous': None,
-#     'total': 100
-# }
+    if albums: 
+
+    #artist 1
+
+        albums_item_1 = albums[0]
+        album_data["artist_name_1"] = albums_item_1['artists'][0]['name']
+        album_data["artist_uri_1"] = albums_item_1['artists'][0]['uri']
+
+        for image in albums_item_1['images']:
+                    if image['height'] == 300:
+                        artist_image_1 = image['url']
+                        break
+                    
+        album_data["artist_image_1"] = artist_image_1
+
+    #artist 2 
+
+        albums_item_2 = albums[1]
+        album_data["artist_name_2"] = albums_item_2['artists'][0]['name']
+        album_data["artist_uri_2"] = albums_item_2['artists'][0]['uri']
+
+        for image in albums_item_2['images']:
+                    if image['height'] == 300:
+                        artist_image_2 = image['url']
+                        break
+                    
+        album_data["artist_image_2"] = artist_image_2
+
+    #artist 3 
+
+        albums_item_3 = albums[2]
+        album_data["artist_name_3"] = albums_item_3['artists'][0]['name']
+        album_data["artist_uri_3"] = albums_item_3['artists'][0]['uri']
+
+        for image in albums_item_3['images']:
+                    if image['height'] == 300:
+                        artist_image_3 = image['url']
+                        break
+                    
+        album_data["artist_image_3"] = artist_image_3
+
+    #artist 4
+
+        albums_item_4 = albums[3]
+        album_data["artist_name_4"] = albums_item_4['artists'][0]['name']
+        album_data["artist_uri_4"] = albums_item_4['artists'][0]['uri']
+
+        for image in albums_item_4['images']:
+                    if image['height'] == 300:
+                        artist_image_4 = image['url']
+                        break
+                    
+        album_data["artist_image_4"] = artist_image_4
+
+    #artist 5
+
+        albums_item_5 = albums[4]
+        album_data["artist_name_5"] = albums_item_5['artists'][0]['name']
+        album_data["artist_uri_5"] = albums_item_5['artists'][0]['uri']
+
+        for image in albums_item_5['images']:
+                    if image['height'] == 300:
+                        artist_image_5 = image['url']
+                        break
+                    
+        album_data["artist_image_5"] = artist_image_5
+
+
+    #artist 6
+
+        albums_item_6 = albums[5]
+        album_data["artist_name_6"] = albums_item_6['artists'][0]['name']
+        album_data["artist_uri_6"] = albums_item_6['artists'][0]['uri']
+
+        for image in albums_item_6['images']:
+                    if image['height'] == 300:
+                        artist_image_6 = image['url']
+                        break
+                    
+        album_data["artist_image_6"] = artist_image_6
+
+
+        return album_data 
+    
+    else: 
+         for i in range(6):
+              album_data[f"artist_name_{i+1}"] = "No connection"
+              album_data[f"artist_uri_{i+1}"] = "https://example.com/"
+              album_data[f"artist_image_{i+1}"] = "No connection"
 
