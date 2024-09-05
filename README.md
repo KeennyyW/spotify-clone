@@ -1,5 +1,5 @@
 # spotify-clone
-simple spotify-clone web app based on django
+simple spotify-clone web app developed with Django
 
 # How to Installation
 
