@@ -97,116 +97,6 @@ def logout_func(request):
     return redirect("signup")
 
 
-
-def logout():
-    pass
-
-def artist_top_tracks(request):
-    urn = 'spotify:artist:1g8HCTiMwBtFtpRR9JXAZR'
-    sp = get_spotify_client()
-
-    # Fetch Top artist tracks
-
-    try:
-        response_top_tracks = sp.artist_top_tracks(urn)
-    except Exception as e:
-        
-        messages.info(request, "Failed to fetch top tracks")
-        
-    artist_tracks = [track['name'] for track in response_top_tracks.get('tracks', [])]
-
-    # Fetch New album releases
-
-    try:
-        response_new_releases = sp.new_releases(limit=10)
-    except Exception as e:
-        
-        messages.info(request, "Failed to fetch album releases")
-
-    
-    albums = response_new_releases.get('albums', {}).get('items', [])
-    
-    if albums:
-        
-        #artist 1
-
-        albums_item = albums[0]
-        artist_name = albums_item['artists'][0]['name']
-        artist_uri = albums_item['artists'][0]['uri']
-
-        # image
-
-        for image in albums_item['images']:
-                if image['height'] == 300:
-                    artist_image = image['url']
-                    break
-
-
-        #artist 2
-
-        albums_item_1 = albums[1]
-        artist_name_1 = albums_item_1['artists'][0]['name']
-        artist_uri_1 = albums_item_1['artists'][0]['uri']
-        
-        for image in albums_item_1['images']:
-                if image['height'] == 300:
-                    artist_image_1 = image['url']
-                    break
-
-        #artist 3
-
-        albums_item_2 = albums[2]
-        artist_name_2 = albums_item_2['artists'][0]['name']
-        artist_uri_2 = albums_item_2['artists'][0]['uri']
-
-        # image
-
-        for image in albums_item_2['images']:
-                if image['height'] == 300:
-                    artist_image_2 = image['url']
-                    break
-
-
-        #artist 4
-
-        albums_item_3 = albums[3]
-        artist_name_3 = albums_item_3['artists'][0]['name']
-        artist_uri_3 = albums_item_3['artists'][0]['uri']
-        
-        for image in albums_item_3['images']:
-                if image['height'] == 300:
-                    artist_image_3 = image['url']
-                    break
-
-        #artist 5
-
-        albums_item_4 = albums[4]
-        artist_name_4 = albums_item_4['artists'][0]['name']
-        artist_uri_1 = albums_item_4['artists'][0]['uri']
-        
-        for image in albums_item_4['images']:
-                if image['height'] == 300:
-                    artist_image_4 = image['url']
-                    break
-
-    else:
-        artist_name = ''
-
-    return render(request, "music/test.html", {
-        'artist_tracks': artist_tracks,
-        'albums': albums,
-        'artist_name': artist_name,
-        'artist_uri': artist_uri,
-        'artist_image': artist_image,
-        'albums_item': albums_item,
-        'albums_item_1': albums_item_1, 'artist_name_1': artist_name_1, 'artist_image_1': artist_image_1,
-        'albums_item_1': albums_item_2, 'artist_name_2': artist_name_2, 'artist_image_2': artist_image_2,
-        'albums_item_1': albums_item_3, 'artist_name_3': artist_name_3, 'artist_image_3': artist_image_3,
-        'albums_item_1': albums_item_4, 'artist_name_4': artist_name_4, 'artist_image_4': artist_image_4,
-    })
-
-
-
 def latest_albums():
     sp = get_spotify_client()
     album_data = {}
@@ -231,6 +121,7 @@ def latest_albums():
         albums_item_1 = albums[0]
         album_data["artist_name_1"] = albums_item_1['artists'][0]['name']
         album_data["artist_uri_1"] = albums_item_1['artists'][0]['uri']
+        album_data["album_name_1"] = albums_item_1['name']
 
         for image in albums_item_1['images']:
                     if image['height'] == 300:
@@ -244,6 +135,7 @@ def latest_albums():
         albums_item_2 = albums[1]
         album_data["artist_name_2"] = albums_item_2['artists'][0]['name']
         album_data["artist_uri_2"] = albums_item_2['artists'][0]['uri']
+        album_data["album_name_2"] = albums_item_2['name']
 
         for image in albums_item_2['images']:
                     if image['height'] == 300:
@@ -257,6 +149,7 @@ def latest_albums():
         albums_item_3 = albums[2]
         album_data["artist_name_3"] = albums_item_3['artists'][0]['name']
         album_data["artist_uri_3"] = albums_item_3['artists'][0]['uri']
+        album_data["album_name_3"] = albums_item_3['name']
 
         for image in albums_item_3['images']:
                     if image['height'] == 300:
@@ -270,6 +163,7 @@ def latest_albums():
         albums_item_4 = albums[3]
         album_data["artist_name_4"] = albums_item_4['artists'][0]['name']
         album_data["artist_uri_4"] = albums_item_4['artists'][0]['uri']
+        album_data["album_name_4"] = albums_item_4['name']
 
         for image in albums_item_4['images']:
                     if image['height'] == 300:
@@ -283,6 +177,7 @@ def latest_albums():
         albums_item_5 = albums[4]
         album_data["artist_name_5"] = albums_item_5['artists'][0]['name']
         album_data["artist_uri_5"] = albums_item_5['artists'][0]['uri']
+        album_data["album_name_5"] = albums_item_5['name']
 
         for image in albums_item_5['images']:
                     if image['height'] == 300:
@@ -297,6 +192,7 @@ def latest_albums():
         albums_item_6 = albums[5]
         album_data["artist_name_6"] = albums_item_6['artists'][0]['name']
         album_data["artist_uri_6"] = albums_item_6['artists'][0]['uri']
+        album_data["album_name_6"] = albums_item_6['name']
 
         for image in albums_item_6['images']:
                     if image['height'] == 300:
@@ -314,3 +210,38 @@ def latest_albums():
               album_data[f"artist_uri_{i+1}"] = "https://example.com/"
               album_data[f"artist_image_{i+1}"] = "No connection"
 
+
+
+def artist_top_tracks(request):
+    urn = 'spotify:artist:1g8HCTiMwBtFtpRR9JXAZR'
+    sp = get_spotify_client()
+    artist_tracks = {}
+    # Fetch Top artist tracks
+
+    try:
+        response_top_tracks = sp.artist_top_tracks(urn)
+    except Exception as e:
+        
+        messages.info(request, "Failed to fetch top tracks")
+        
+    artist_tracks['tracks'] = [track['name'] for track in response_top_tracks.get('tracks', [])]
+
+    # Fetch New album releases
+    return artist_tracks
+
+
+
+
+def artist(request):
+    urn = 'spotify:artist:1g8HCTiMwBtFtpRR9JXAZR'
+    sp = get_spotify_client()
+    try:
+        response_artist = sp.search(q='genre:anime', type='artist', limit=5)
+  
+    except Exception as e:
+        
+        messages.info(request, "Failed to fetch top tracks")
+
+    return render(request, "music/test.html", {
+         "artist": response_artist
+    })
