@@ -7,7 +7,7 @@ urlpatterns = [
     path('signup', views.signup, name="signup"),
     path('login', views.login, name="login"),
     path('logout', views.logout_func, name="logout"),
-    path('artist', views.artist, name="artist"),
+    #path('artist', views.spotify_playlist, name="artist"),
     
     
     

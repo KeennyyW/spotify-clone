@@ -4,7 +4,6 @@ from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required 
 from django.contrib.auth import logout, authenticate, login
 from django.conf import settings
-import base64
 import requests
 from dotenv import load_dotenv
 from API.spotify import get_spotify_client
@@ -22,8 +21,9 @@ import sys
 def index(request):
 
     album_data = latest_albums()
+    #playlist_names = spotify_playlist()
 
-    return render(request, "music/index.html", album_data)
+    return render(request, "music/index.html", album_data,  )
 
 
 def login(request):
@@ -237,11 +237,25 @@ def artist(request):
     sp = get_spotify_client()
     try:
         response_artist = sp.search(q='genre:anime', type='artist', limit=5)
-  
+        playlists = sp.featured_playlists(limit=10, country="EN")
     except Exception as e:
         
         messages.info(request, "Failed to fetch top tracks")
 
     return render(request, "music/test.html", {
-         "artist": response_artist
+         "artist": response_artist,
+         "playlists": playlists
     })
+
+
+
+
+def spotify_playlist():
+    sp = get_spotify_client()
+    response_playlists = sp.featured_playlists(limit=10)
+
+    playlists = response_playlists.get('playlists', {}).get('items', [])
+    playlist_names = [playlist.get('name') for playlist in playlists]       
+    
+    
+    return playlist_names
