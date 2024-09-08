@@ -28,7 +28,17 @@ conda activate <env_name>
 pip install -r requirements.txt
 ```
 
-### 4. Start django server 
+### 4. Get Spotify API Credentials
+
+1. Go on the [Spotify Developer](https://developer.spotify.com/dashboard) site, create an account and get your credentials
+2. Create .env file in root and pass the credentials in
+
+```.env
+SPOTIFY_CLIENT_ID='your-credentials' 
+SPOTIFY_CLIENT_SECRET='your-credentials' 
+```
+
+### 5. Start django server 
 
 ```bash
 cd spotify
