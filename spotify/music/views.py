@@ -19,11 +19,21 @@ import sys
 
 # @login_required(login_url="login")
 def index(request):
-
     album_data = latest_albums()
-    #playlist_names = spotify_playlist()
+    playlist_data = spotify_playlist()
 
-    return render(request, "music/index.html", album_data,  )
+
+    playlist_names = playlist_data['playlist_names']
+    playlist_image = playlist_data['playlist_image']
+
+    context = {
+        "playlist_names": playlist_names,
+        "playlist_image": playlist_image,
+        **album_data,  
+    }
+
+    return render(request, "music/index.html", context)
+
 
 
 def login(request):
@@ -252,10 +262,42 @@ def artist(request):
 
 def spotify_playlist():
     sp = get_spotify_client()
-    response_playlists = sp.featured_playlists(limit=10)
+    response_playlists = sp.featured_playlists(limit=14)
 
     playlists = response_playlists.get('playlists', {}).get('items', [])
     playlist_names = [playlist.get('name') for playlist in playlists]       
+    playlist_image_data = [playlist.get('images') for playlist in playlists] 
+    urls = [item[0]['url'] for item in playlist_image_data]
+
+
+
+    playlist_data = {
+        'playlist_names': playlist_names,
+        'playlist_image': urls
+    }
+
+    return playlist_data
+
+
+
+
+def test(request): 
+    sp = get_spotify_client()
+    response_playlists = sp.featured_playlists(limit=14) 
+
+    playlists = response_playlists.get('playlists', {}).get('items', [])
+    playlist_names = [playlist.get('name') for playlist in playlists]       
+    playlist_image_data = [playlist.get('images') for playlist in playlists] 
     
     
-    return playlist_names
+    urls = [item[0]['url'] for item in playlist_image_data]
+
+
+
+    return render(request, "music/test.html", {
+         "playlist": urls,
+         
+    })
+
+
+ 
