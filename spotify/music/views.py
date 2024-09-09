@@ -13,15 +13,11 @@ import sys
 # Create your views here.
 
 
-
-
-
-
 # @login_required(login_url="login")
 def index(request):
     album_data = latest_albums()
     playlist_data = spotify_playlist()
-    artist_data = artist()
+    artist_data = trending_artist()
 
     playlist_names = playlist_data['playlist_names']
     playlist_image = playlist_data['playlist_image']
@@ -46,9 +42,6 @@ def artist_page(request):
      
      return render(request, "music/profile.html",)
      
-
-
-
 
 
 def login(request):
@@ -255,7 +248,7 @@ def artist_top_tracks(request):
 
 
 
-def artist():
+def trending_artist():
     sp = get_spotify_client()
 
     try:
@@ -316,7 +309,12 @@ def spotify_playlist():
 
     return playlist_data
 
+def artist(): 
+     sp = get_spotify_client()
+     urn = 'spotify:artist:1g8HCTiMwBtFtpRR9JXAZR'
+     response_artist = sp.artist(urn) 
 
+     return response_artist
 
 
 def test(request): 
@@ -331,6 +329,7 @@ def test(request):
     urls = [item[0]['url'] for item in playlist_image_data]
 
     artist_data = artist()
+    
 
     return render(request, "music/test.html", {
          "playlist": artist_data,
@@ -339,4 +338,3 @@ def test(request):
     })
 
 
- 

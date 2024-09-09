@@ -1,0 +1,14 @@
+artist page:
+
+automaticly create artist route for every UID from an artist
+
+make clicking on an artist on the mainpage redirect them to that specific route.
+
+get necessery data from the spotify API.
+
+fill page with the data the API provides. (Name, top songs (with cover image), maybe discograpy section  )
+
+implement the sraper API for the content that is missing atm: (artist discription, banner).
+
+
+
