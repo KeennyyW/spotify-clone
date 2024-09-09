@@ -21,18 +21,33 @@ import sys
 def index(request):
     album_data = latest_albums()
     playlist_data = spotify_playlist()
-
+    artist_data = artist()
 
     playlist_names = playlist_data['playlist_names']
     playlist_image = playlist_data['playlist_image']
 
+    artist_name = artist_data['artist_names']
+    artist_image = artist_data['artist_images']  
+
     context = {
         "playlist_names": playlist_names,
         "playlist_image": playlist_image,
-        **album_data,  
+        "artist_name": artist_name,
+        "artist_image": artist_image,
+        **album_data,
     }
 
     return render(request, "music/index.html", context)
+
+
+
+
+def artist_page(request):
+     
+     return render(request, "music/profile.html",)
+     
+
+
 
 
 
@@ -236,26 +251,49 @@ def artist_top_tracks(request):
         
     artist_tracks['tracks'] = [track['name'] for track in response_top_tracks.get('tracks', [])]
 
-    # Fetch New album releases
     return artist_tracks
 
 
 
-
-def artist(request):
-    urn = 'spotify:artist:1g8HCTiMwBtFtpRR9JXAZR'
+def artist():
     sp = get_spotify_client()
-    try:
-        response_artist = sp.search(q='genre:anime', type='artist', limit=5)
-        playlists = sp.featured_playlists(limit=10, country="EN")
-    except Exception as e:
-        
-        messages.info(request, "Failed to fetch top tracks")
 
-    return render(request, "music/test.html", {
-         "artist": response_artist,
-         "playlists": playlists
-    })
+    try:
+        
+        response_artist = sp.search(q='genre:pop', type='artist', limit=8)
+
+        
+        artists = response_artist.get('artists', {}).get('items', [])
+
+        
+        artist_names = []
+        artist_images = []
+        artist_uris = []
+
+        
+        for artist in artists:
+            name = artist.get('name')
+            images = artist.get('images', [])
+            image_url = images[0].get('url') if images else None  
+            artist_uri = artist.get('uri')
+
+            
+            artist_names.append(name)
+            artist_images.append(image_url)
+            artist_uris.append(artist_uri)
+
+        
+        artist_info_list = {
+            'artist_names': artist_names,
+            'artist_images': artist_images,
+            'artist_uris': artist_uris,
+        }
+
+    except Exception as e:
+        print(e)
+        artist_info_list = {}  
+
+    return artist_info_list
 
 
 
@@ -292,10 +330,11 @@ def test(request):
     
     urls = [item[0]['url'] for item in playlist_image_data]
 
-
+    artist_data = artist()
 
     return render(request, "music/test.html", {
-         "playlist": urls,
+         "playlist": artist_data,
+         
          
     })
 

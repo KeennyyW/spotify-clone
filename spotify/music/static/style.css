@@ -1,4 +1,6 @@
-        /* General Reset */
+
+    
+    /* General Reset */
     * {
         margin: 0;
         padding: 0;
@@ -320,8 +322,8 @@
 
 .sidebar-link:hover,
 .sidebar-link.active {
-   color: #fff;
-} 
+    color: #fff;
+}
 
 .sidebar-link-icon {
     margin-right: 15px;
@@ -361,7 +363,7 @@
     align-items: center;
     justify-content: center;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 8px;
     background: #181818;
     color: white;
     text-align: center;
@@ -375,7 +377,7 @@
     height: auto;
     margin-top: 12px;
     margin-bottom: 10px;
-    border-radius: 8px;
+    border-radius: 4px;
 }
 
 .category-title {
