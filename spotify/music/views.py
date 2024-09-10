@@ -23,13 +23,15 @@ def index(request):
     playlist_image = playlist_data['playlist_image']
 
     artist_name = artist_data['artist_names']
-    artist_image = artist_data['artist_images']  
+    artist_image = artist_data['artist_images'] 
+    artist_uri = artist_data['artist_uris'] 
 
     context = {
         "playlist_names": playlist_names,
         "playlist_image": playlist_image,
         "artist_name": artist_name,
         "artist_image": artist_image,
+        "artist_uri": artist_uri,
         **album_data,
     }
 
@@ -38,7 +40,11 @@ def index(request):
 
 
 
-def artist_page(request):
+def artist_page(request, artist_link):
+     sp = get_spotify_client()
+     artist_data = sp.artist(artist_link)
+
+     
      
      return render(request, "music/profile.html",)
      
