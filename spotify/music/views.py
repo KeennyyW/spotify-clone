@@ -7,6 +7,7 @@ from django.conf import settings
 import requests
 from dotenv import load_dotenv
 from API.spotify import get_spotify_client
+from API.RapidAPI import artist_data
 import sys
 
 #from django.http import HttpResponse  
@@ -44,9 +45,11 @@ def artist_page(request, artist_link):
      sp = get_spotify_client()
      artist_data = sp.artist(artist_link)
 
+     response = artist_data()
      
-     
-     return render(request, "music/profile.html",)
+     return render(request, "music/profile.html", context = {
+          "artist_data": response
+     })
      
 
 
