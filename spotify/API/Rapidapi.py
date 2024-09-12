@@ -18,6 +18,11 @@ def artist_data():
 
     response = response_api.json()
 
-    return response
+    
 
-response = artist_data()
+
+
+
+    print(response)
+
+#artist_data()

@@ -7,7 +7,7 @@ from django.conf import settings
 import requests
 from dotenv import load_dotenv
 from API.spotify import get_spotify_client
-from API.RapidAPI import artist_data
+from API.rapidapi import artist_data
 import sys
 
 #from django.http import HttpResponse  
@@ -43,12 +43,29 @@ def index(request):
 
 def artist_page(request, artist_link):
      sp = get_spotify_client()
-     artist_data = sp.artist(artist_link)
+     artist_data_spotipy = sp.artist(artist_link)
+
+     artist_data_name = artist_data_spotipy['name']
+     
+
+
+     artist_image = next((image['url'] for image in artist_data_spotipy['images'] if image['height'] == 640), None)
+     
+
+     
+
 
      response = artist_data()
+
+
+     response_dict = {
+          'artist_data': response
+     }
      
      return render(request, "music/profile.html", context = {
-          "artist_data": response
+          "artist_image": artist_image,
+        "artist_name": artist_data_name,
+
      })
      
 
