@@ -39,32 +39,25 @@ def index(request):
     return render(request, "music/index.html", context)
 
 
-
-
 def artist_page(request, artist_link):
      sp = get_spotify_client()
      artist_data_spotipy = sp.artist(artist_link)
 
      artist_data_name = artist_data_spotipy['name']
      
-
+     rapidapi_data = artist_data()
 
      artist_image = next((image['url'] for image in artist_data_spotipy['images'] if image['height'] == 640), None)
      
+     artist_banner = rapidapi_data[0][1]
+     #artist_biography = rapidapi_data[0]
 
-     
-
-
-     response = artist_data()
-
-
-     response_dict = {
-          'artist_data': response
-     }
      
      return render(request, "music/profile.html", context = {
-          "artist_image": artist_image,
+          "artist_image": artist_banner,
         "artist_name": artist_data_name,
+        "artist_data": artist_link
+        
 
      })
      
@@ -326,8 +319,6 @@ def spotify_playlist():
     playlist_image_data = [playlist.get('images') for playlist in playlists] 
     urls = [item[0]['url'] for item in playlist_image_data]
 
-
-
     playlist_data = {
         'playlist_names': playlist_names,
         'playlist_image': urls
@@ -364,3 +355,7 @@ def test(request):
     })
 
 
+
+def artist_uri_to_id_view(artist_link):
+    artist_id = artist_link.split("spotify:artist:")[1]
+    return artist_id

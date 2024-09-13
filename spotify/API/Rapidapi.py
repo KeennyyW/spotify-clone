@@ -1,5 +1,5 @@
 import requests
-
+from music.utils import artist_uri_to_id
 
 
 def artist_data():
@@ -7,7 +7,9 @@ def artist_data():
 
     url = "https://spotify-scraper.p.rapidapi.com/v1/artist/overview"
 
-    querystring = {"artistId":"6eUKZXaKkcviH0Ku9w2n3V"}
+    artist_id = artist_uri_to_id()
+
+    querystring = {"artistId":artist_id}
 
     headers = {
         "x-rapidapi-key": "cc49d36267msh050e72f34e20be7p1bd57djsne18bef43adb2",
@@ -16,13 +18,16 @@ def artist_data():
 
     response_api = requests.get(url, headers=headers, params=querystring)
 
-    response = response_api.json()
+    response_data = response_api.json()
 
-    
+    artist_info = []
+
+    biography = response_data.get('biography')
+    banner = response_data.get('visuals', {}).get('header',[{}])[0].get('url')
+
+    artist_info.append((biography, banner))
 
 
-
-
-    print(response)
+    return artist_info
 
 #artist_data()
