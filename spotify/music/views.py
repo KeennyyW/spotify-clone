@@ -7,7 +7,7 @@ from django.conf import settings
 import requests
 from dotenv import load_dotenv
 from API.spotify import get_spotify_client
-from API.rapidapi import artist_data
+#from API.rapidapi import artist_data
 import sys
 
 #from django.http import HttpResponse  
@@ -40,26 +40,27 @@ def index(request):
 
 
 def artist_page(request, artist_link):
-     sp = get_spotify_client()
-     artist_data_spotipy = sp.artist(artist_link)
+    sp = get_spotify_client()
+    artist_data_spotipy = sp.artist(artist_link)
 
-     artist_data_name = artist_data_spotipy['name']
-     
-     rapidapi_data = artist_data()
+    artist_data_name = artist_data_spotipy['name']
 
-     artist_image = next((image['url'] for image in artist_data_spotipy['images'] if image['height'] == 640), None)
-     
-     artist_banner = rapidapi_data[0][1]
-     #artist_biography = rapidapi_data[0]
+    artist_image = next((image['url'] for image in artist_data_spotipy['images'] if image['height'] == 640), None)
+    
+    top_tracks = artist_top_tracks(artist_link)["tracks"]
 
-     
-     return render(request, "music/profile.html", context = {
-          "artist_image": artist_banner,
+    rapid_response = artist_data_rapid(artist_link)  
+    banner = rapid_response[0][1]
+    
+
+    return render(request, "music/profile.html", context={
         "artist_name": artist_data_name,
-        "artist_data": artist_link
+        "artist_banner": banner,
+        "artist_image":artist_image,
+        "top_tracks": top_tracks
         
-
-     })
+        
+    })
      
 
 
@@ -249,8 +250,8 @@ def latest_albums():
 
 
 
-def artist_top_tracks(request):
-    urn = 'spotify:artist:1g8HCTiMwBtFtpRR9JXAZR'
+def artist_top_tracks(data):
+    urn = data
     sp = get_spotify_client()
     artist_tracks = {}
     # Fetch Top artist tracks
@@ -356,6 +357,27 @@ def test(request):
 
 
 
-def artist_uri_to_id_view(artist_link):
-    artist_id = artist_link.split("spotify:artist:")[1]
-    return artist_id
+def artist_data_rapid(data):
+    url = "https://spotify-scraper.p.rapidapi.com/v1/artist/overview"
+
+    formatted_data = data.removeprefix("spotify:artist:")
+
+    querystring = {"artistId": formatted_data}  
+
+    headers = {
+        "x-rapidapi-key": "cc49d36267msh050e72f34e20be7p1bd57djsne18bef43adb2",
+        "x-rapidapi-host": "spotify-scraper.p.rapidapi.com"
+    }
+
+    response_api = requests.get(url, headers=headers, params=querystring)
+
+    response_data = response_api.json()
+
+    artist_info = []
+
+    biography = response_data.get('biography')
+    banner = response_data.get('visuals', {}).get('header', [{}])[0].get('url')
+
+    artist_info.append((biography, banner))
+
+    return artist_info
