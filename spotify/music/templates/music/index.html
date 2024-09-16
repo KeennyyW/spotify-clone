@@ -10,12 +10,8 @@
         <section style=" margin-top:0px; padding:0px; overflow-x:auto; white-space:nowrap;">
             <!-- Artist Card -->
 
-
-
-            
-
-            <div class="artist-card ">
-                <a href="artist/{{ artist_uri.1 }}">
+            <div class="artist-card">
+                <a href="artist/{{ artist_uri.1 }}" class="items-center">
                     <img src="{{ artist_image.1 }}" alt="{{ artist_name.1 }}" style="width:150px; height:150px; border-radius:50%;">
                 </a>
                 <div class="artist-info">
@@ -112,40 +108,40 @@
     <!-- latest albums  -->
     
 
-    <div class="browse-all bg-gray-900">
-        
-        <div class="category-card">
-            <img src={{ artist_image_1 }} alt="cover from {{ album_name_1 }}">
+    <div class="browse-all rounded-lg">
+        <a href="album/{{ album_uri_1 }}" class="category-card">
+            <img src="{{ artist_image_1 }}" alt="cover from {{ album_name_1 }}">
             <div class="category-title">{{ album_name_1 }}</div>
-        </div>
-
-        <div class="category-card">
-            <img src={{ artist_image_2 }} alt="cover from {{ album_name_2 }} ">
+        </a>
+    
+        <a href="album/{{ artist_uri_2 }}" class="category-card">
+            <img src="{{ artist_image_2 }}" alt="cover from {{ album_name_2 }}">
             <div class="category-title">{{ album_name_2 }}</div>
-        </div>
-
-        <div class="category-card">
-            <img src={{ artist_image_3 }} alt="cover from {{ album_name_3 }} ">
+        </a>
+    
+        <a href="album/{{ artist_uri_3 }}" class="category-card">
+            <img src="{{ artist_image_3 }}" alt="cover from {{ album_name_3 }}">
             <div class="category-title">{{ album_name_3 }}</div>
-        </div>
-
-        <div class="category-card">
-            <img src={{ artist_image_4 }} alt="cover from {{ album_name_4 }} ">
+        </a>
+    
+        <a href="album/{{ artist_uri_4 }}" class="category-card">
+            <img src="{{ artist_image_4 }}" alt="cover from {{ album_name_4 }}">
             <div class="category-title">{{ album_name_4 }}</div>
-        </div>
-
-        <div class="category-card">
-            <img src={{ artist_image_5 }} alt="cover from {{ album_name_5 }} ">
+        </a>
+    
+        <a href="album/{{ artist_uri_5 }}" class="category-card">
+            <img src="{{ artist_image_5 }}" alt="cover from {{ album_name_5 }}">
             <div class="category-title">{{ album_name_5 }}</div>
-        </div>
-
-        <div class="category-card">
-            <img src={{ artist_image_6 }} alt="cover from {{ album_name_6 }} ">
+        </a>
+    
+        <a href="album/{{ artist_uri_6 }}" class="category-card">
+            <img src="{{ artist_image_6 }}" alt="cover from {{ album_name_6 }}">
             <div class="category-title">{{ album_name_6 }}</div>
-        </div>
+        </a>
         <!-- Repeat for each category -->
         <!-- ... other categories ... -->
     </div>
+    
 
     <div class="browse-all-title">Featured Playlists</div>
 

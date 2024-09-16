@@ -211,8 +211,9 @@
     text-align: center;
     position: relative;
     overflow: hidden;
-    margin: 0 5px 20px;
+    margin: 0 20px 20px;
     display: inline-block;
+   
     
 }
 
@@ -223,6 +224,11 @@
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 8px;
+}
+
+.artist-card a {
+    display: flex;
+    justify-content: center;
 }
 
 .artist-card .artist-name {
@@ -258,7 +264,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #2a2a2a;
+    
     border-radius: 20px;
     padding: 10px;
     margin: 0 0px;
@@ -353,6 +359,7 @@
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: 115px;
     padding: 10px;
+    
 }
 
 .category-card {
@@ -362,12 +369,12 @@
     justify-content: center;
     padding: 10px;
     border-radius: 10px;
-    background: #181818;
     color: white;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    box-shadow: none;
     height: 240px;
     width: 220px;
+    background-color: transparent;
 }
 
 .category-card img {
@@ -517,4 +524,9 @@
 .song-item .song-duration {
     font-size: 18px;
     color: #b3b3b3;
+}
+
+.test {
+    padding-top: 10px;
+
 }

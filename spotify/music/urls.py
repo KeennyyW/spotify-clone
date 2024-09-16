@@ -9,7 +9,7 @@ urlpatterns = [
     path('logout', views.logout_func, name="logout"),
     path('test', views.test, name="test"),
     path('artist/<str:artist_link>/', views.artist_page, name="artist_page"),
-    path('album', views.album_func, name="album_func")
+    path('album/<str:album_link>/', views.album_func, name="album_func")
 
     
     

@@ -164,6 +164,7 @@ def latest_albums():
         album_data["artist_name_1"] = albums_item_1['artists'][0]['name']
         album_data["artist_uri_1"] = albums_item_1['artists'][0]['uri']
         album_data["album_name_1"] = albums_item_1['name']
+        album_data["album_uri_1"] = albums_item_1["id"]
 
         for image in albums_item_1['images']:
                     if image['height'] == 300:
@@ -391,8 +392,14 @@ def artist_data_rapid(data):
     return artist_info
 
 
-def album_func( request):
+def album_func(request, album_link):
+    sp = get_spotify_client()
+    formatted_data = album_link.removeprefix("spotify:artist:")
+    response = sp.album_tracks(album_link, limit=5)
+
     
-    return render(request, "music/album.html",)
+    return render(request, "music/album.html", context={
+         "response": response
+    })
      
 
