@@ -48,7 +48,7 @@ python manage.py runserver
 
 
 ## Project still in development!
-
+note that the linked vercel app is not working
 
 
 
