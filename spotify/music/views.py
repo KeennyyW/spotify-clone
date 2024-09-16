@@ -48,6 +48,10 @@ def artist_page(request, artist_link):
     artist_image = next((image['url'] for image in artist_data_spotipy['images'] if image['height'] == 640), None)
     
     top_tracks = artist_top_tracks(artist_link)["tracks"]
+    song_image = artist_top_tracks(artist_link)["image"]
+    
+    
+    top_tracks_image = artist_top_tracks(artist_link)
 
     rapid_response = artist_data_rapid(artist_link)  
     banner = rapid_response[0][1]
@@ -57,8 +61,8 @@ def artist_page(request, artist_link):
         "artist_name": artist_data_name,
         "artist_banner": banner,
         "artist_image":artist_image,
-        "top_tracks": top_tracks
-        
+        "top_tracks": top_tracks,
+        "song_image": song_image
         
     })
      
@@ -263,7 +267,11 @@ def artist_top_tracks(data):
         messages.info(request, "Failed to fetch top tracks")
         
     artist_tracks['tracks'] = [track['name'] for track in response_top_tracks.get('tracks', [])]
-
+    artist_tracks['uri'] = [track['uri'] for track in  response_top_tracks.get('tracks', [])]
+    artist_tracks['image'] = [
+    next((image['url'] for image in track['album']['images'] if image['width'] == 300), None)
+    for track in response_top_tracks.get('tracks', [])
+]
     return artist_tracks
 
 
@@ -381,3 +389,10 @@ def artist_data_rapid(data):
     artist_info.append((biography, banner))
 
     return artist_info
+
+
+def album_func( request):
+    
+    return render(request, "music/album.html",)
+     
+
