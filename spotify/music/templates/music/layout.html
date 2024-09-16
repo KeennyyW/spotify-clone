@@ -7,69 +7,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.4/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body style="margin:0; padding:0; background:#121212; font-family:Arial, sans-serif; color:#fff;">
+<body class="bg-gray-900 text-gray-100 flex">
 
-    <div class="sidebar">
+    <div class="sidebar w-64 bg-gray-800 min-h-screen p-4">
         <!-- Spotify Logo -->
-        <div class="logo-container">
-            <img src="https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_RGB_Green.png" alt="Spotify Logo" style="width: 100%; height: auto; padding: 20px; box-sizing: border-box;">
+        <div class="logo-container mb-6">
+            <img src="https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_RGB_Green.png" alt="Spotify Logo" class="w-full h-auto">
         </div>
 
         <!-- Welcome User -->
-        <div class="sidebar-section">
-            <span style="margin-left: 14px;" class="sidebar-link-icon">👤</span>
-            <b>Welcome, user</b>
-            <br>
-            <br>
-            <a href="logout">
-                <span class="sidebar-link-icon">↪️</span>
-                <b>Logout</b>
+        <div class="sidebar-section px-4 py-2 bg-gray-900 rounded-md mb-4">
+            <span class="text-lg">👤</span>
+            <p class="font-semibold">Welcome, user</p>
+            <a href="logout" class="flex items-center space-x-2 text-gray-300 hover:text-white mt-2">
+                <span class="text-lg">↪️</span>
+                <span class="font-semibold">Logout</span>
             </a>
         </div>
 
-        <!-- Top section of the sidebar -->
-        <div class="sidebar-section">
-            <a href="#" class="sidebar-link active">
-                <span class="sidebar-link-icon">🏠</span>
-                Home
+        <!-- Navigation Sections -->
+        <div class="sidebar-section mb-4 bg-gray-900">
+            <a href="#" class="flex items-center space-x-2 text-gray-300 hover:text-white py-2 px-4 rounded-md hover:bg-gray-700">
+                <span class="text-lg">🏠</span>
+                <span>Home</span>
             </a>
-            <a href="#" class="sidebar-link">
-                <span class="sidebar-link-icon">🔍</span>
-                Search
+            <a href="#" class="flex items-center space-x-2 text-gray-300 hover:text-white py-2 px-4 rounded-md hover:bg-gray-700">
+                <span class="text-lg">🔍</span>
+                <span>Search</span>
             </a>
-            <a href="#" class="sidebar-link">
-                <span class="sidebar-link-icon">🎵</span>
-                Your Library
+            <a href="#" class="flex items-center space-x-2 text-gray-300 hover:text-white py-2 px-4 rounded-md hover:bg-gray-700">
+                <span class="text-lg">🎵</span>
+                <span>Your Library</span>
             </a>
         </div>
 
-        <!-- Bottom section of the sidebar -->
-        <div class="sidebar-section">
-            <a href="#" class="sidebar-link active">
-                <span class="sidebar-link-icon">💜</span>
-                <span class="sidebar-link-text">Liked Songs</span>
+        <div class="sidebar-section bg-gray-900">
+            <a href="#" class="flex items-center space-x-2 text-gray-300 hover:text-white py-2 px-4 rounded-md hover:bg-gray-700">
+                <span class="text-lg">💜</span>
+                <span>Liked Songs</span>
             </a>
-            <!-- Repeat for each item -->
-            <a href="#" class="sidebar-link">
-                <span class="sidebar-link-icon">🎶</span>
-                <span class="sidebar-link-text">African Lofi Experience</span>
+            <a href="#" class="flex items-center space-x-2 text-gray-300 hover:text-white py-2 px-4 rounded-md hover:bg-gray-700">
+                <span class="text-lg">🎶</span>
+                <span>African Lofi Experience</span>
             </a>
-            <a href="#" class="sidebar-link">
-                <span class="sidebar-link-icon">👤</span>
-                <span class="sidebar-link-text">Ayra Starr</span>
+            <a href="#" class="flex items-center space-x-2 text-gray-300 hover:text-white py-2 px-4 rounded-md hover:bg-gray-700">
+                <span class="text-lg">👤</span>
+                <span>Ayra Starr</span>
             </a>
-            <!-- ... more links ... -->
         </div>
     </div>
 
-    <div style="margin-left:240px; padding:20px;">
-        <header class="header-container">
-            <div class="search-bar" style="width: 390px;">
-                <input type="search" placeholder="What do you want to listen to?" aria-label="Search">
-                <button type="submit" aria-label="Search">🔍</button>
+    <div class="flex-1 ml-64 p-6 ">
+        <header class="header-container mb-6 bg-gray-900">
+            <div class="search-bar flex items-center space-x-2 bg-gray-800 p-2 rounded-lg border border-gray-700">
+                <input type="search" placeholder="What do you want to listen to?" aria-label="Search" class="bg-gray-800 text-gray-100 placeholder-gray-400 w-full p-2 rounded-l-lg focus:outline-none focus:ring-2 focus:bg-slate-950">
+                <button type="submit" aria-label="Search" class="bg-slate-950 px-4 py-2 rounded-r-lg text-gray-100 hover:bg-slate-950">
+                    🔍
+                </button>
             </div>
-            <div class="search-title">Top Artists</div>
+            <div class="search-title text-2xl font-semibold mt-4">Top Artists</div>
         </header>
 
         <!-- Content Section -->
