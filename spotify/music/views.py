@@ -394,12 +394,25 @@ def artist_data_rapid(data):
 
 def album_func(request, album_link):
     sp = get_spotify_client()
-    formatted_data = album_link.removeprefix("spotify:artist:")
+    
     response = sp.album_tracks(album_link, limit=5)
 
+    album_name = response.get('items',{})[0].get('name')
+    album_tracks = []
+    #album_trakcs.append()
+
+    track_names = []
+
+    for item in response.get('items', []):
+        
+        track_name = item.get('name', 'Unknown Track Name')
+        track_names.append(track_name)
+
+        
     
     return render(request, "music/album.html", context={
-         "response": response
+         "track_names": track_names 
     })
      
 
+#image, release data, songs, artist name, 
