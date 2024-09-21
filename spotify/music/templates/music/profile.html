@@ -102,7 +102,7 @@
             <img src="{{ song_image.0 }}" alt="Song Image" class="w-12 h-12 rounded">
             <div>
               <p class="text-base font-medium">{{ top_tracks.0 }}</p>
-              <p class="text-xs text-gray-400">Rema, Selena Gomez</p>
+              <p class="text-xs text-gray-400">{{ artist_name }}</p>
             </div>
           </div>
           <div class="text-gray-400">1,182,474,314</div>
@@ -114,7 +114,7 @@
             <img src="{{ song_image.1 }}" alt="Song Image" class="w-12 h-12 rounded">
             <div>
               <p class="text-base font-medium">{{ top_tracks.1 }}</p>
-              <p class="text-xs text-gray-400">Rema, Selena Gomez</p>
+              <p class="text-xs text-gray-400">{{ artist_name }}</p>
             </div>
           </div>
           <div class="text-gray-400">1,182,474,314</div>
@@ -126,7 +126,7 @@
             <img src="{{ song_image.2 }}" alt="Song Image" class="w-12 h-12 rounded">
             <div>
               <p class="text-base font-medium">{{ top_tracks.2 }}</p>
-              <p class="text-xs text-gray-400">Rema, Selena Gomez</p>
+              <p class="text-xs text-gray-400">{{ artist_name }}</p>
             </div>
           </div>
           <div class="text-gray-400">1,182,474,314</div>
@@ -138,7 +138,7 @@
             <img src="{{ song_image.3 }}" alt="Song Image" class="w-12 h-12 rounded">
             <div>
               <p class="text-base font-medium">{{ top_tracks.3 }}</p>
-              <p class="text-xs text-gray-400">Rema, Selena Gomez</p>
+              <p class="text-xs text-gray-400">{{ artist_name }}</p>
             </div>
           </div>
           <div class="text-gray-400">1,182,474,314</div>
@@ -150,7 +150,7 @@
             <img src="{{ song_image.4 }}" alt="Song Image" class="w-12 h-12 rounded">
             <div>
               <p class="text-base font-medium">{{ top_tracks.4 }}</p>
-              <p class="text-xs text-gray-400">Rema, Selena Gomez</p>
+              <p class="text-xs text-gray-400">{{ artist_name }}</p>
             </div>
           </div>
           <div class="text-gray-400">1,182,474,314</div>
@@ -167,7 +167,7 @@
       <h2 class="text-2xl font-bold mb-4">Biography</h2>
       <div class="p-6 rounded-lg" style="background-color: #181818;">
         <p class="text-gray-300">
-         
+          {{ song_image }}
         </p>
       </div>
     </div>

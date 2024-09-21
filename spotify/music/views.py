@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 from API.spotify import get_spotify_client
 #from API.rapidapi import artist_data
 import sys
+from random import randint
 
 #from django.http import HttpResponse  
 # Create your views here.
@@ -162,7 +163,7 @@ def latest_albums():
 
         albums_item_1 = albums[0]
         album_data["artist_name_1"] = albums_item_1['artists'][0]['name']
-        album_data["artist_uri_1"] = albums_item_1['artists'][0]['uri']
+        #album_data["artist_uri_1"] = albums_item_1['artists'][0]['uri']
         album_data["album_name_1"] = albums_item_1['name']
         album_data["album_uri_1"] = albums_item_1["id"]
 
@@ -177,8 +178,9 @@ def latest_albums():
 
         albums_item_2 = albums[1]
         album_data["artist_name_2"] = albums_item_2['artists'][0]['name']
-        album_data["artist_uri_2"] = albums_item_2['artists'][0]['uri']
+        #album_data["artist_uri_2"] = albums_item_2['artists'][0]['uri']
         album_data["album_name_2"] = albums_item_2['name']
+        album_data["album_uri_2"] = albums_item_2["id"]
 
         for image in albums_item_2['images']:
                     if image['height'] == 300:
@@ -191,8 +193,9 @@ def latest_albums():
 
         albums_item_3 = albums[2]
         album_data["artist_name_3"] = albums_item_3['artists'][0]['name']
-        album_data["artist_uri_3"] = albums_item_3['artists'][0]['uri']
+        #album_data["artist_uri_3"] = albums_item_3['artists'][0]['uri']
         album_data["album_name_3"] = albums_item_3['name']
+        album_data["album_uri_3"] = albums_item_3["id"]
 
         for image in albums_item_3['images']:
                     if image['height'] == 300:
@@ -205,8 +208,9 @@ def latest_albums():
 
         albums_item_4 = albums[3]
         album_data["artist_name_4"] = albums_item_4['artists'][0]['name']
-        album_data["artist_uri_4"] = albums_item_4['artists'][0]['uri']
+       # album_data["artist_uri_4"] = albums_item_4['artists'][0]['uri']
         album_data["album_name_4"] = albums_item_4['name']
+        album_data["album_uri_4"] = albums_item_4["id"]
 
         for image in albums_item_4['images']:
                     if image['height'] == 300:
@@ -219,8 +223,9 @@ def latest_albums():
 
         albums_item_5 = albums[4]
         album_data["artist_name_5"] = albums_item_5['artists'][0]['name']
-        album_data["artist_uri_5"] = albums_item_5['artists'][0]['uri']
+       # album_data["artist_uri_5"] = albums_item_5['artists'][0]['uri']
         album_data["album_name_5"] = albums_item_5['name']
+        album_data["album_uri_5"] = albums_item_5["id"]
 
         for image in albums_item_5['images']:
                     if image['height'] == 300:
@@ -234,8 +239,9 @@ def latest_albums():
 
         albums_item_6 = albums[5]
         album_data["artist_name_6"] = albums_item_6['artists'][0]['name']
-        album_data["artist_uri_6"] = albums_item_6['artists'][0]['uri']
+        # album_data["artist_uri_6"] = albums_item_6['artists'][0]['uri']
         album_data["album_name_6"] = albums_item_6['name']
+        album_data["album_uri_6"] = albums_item_6["id"]
 
         for image in albums_item_6['images']:
                     if image['height'] == 300:
@@ -281,9 +287,19 @@ def trending_artist():
     sp = get_spotify_client()
 
     try:
-        
-        response_artist = sp.search(q='genre:pop', type='artist', limit=8)
-
+        random_handler = randint(0, 4)
+        if random_handler == 0:
+            response_artist = sp.search(q='genre:pop', type='artist', limit=8)
+        elif random_handler == 1:
+            response_artist = sp.search(q='genre:alt-rock', type='artist', limit=8)
+        elif random_handler == 2:
+            response_artist = sp.search(q='genre:dance', type='artist', limit=8)
+        elif random_handler == 3:
+            response_artist = sp.search(q='genre:idm', type='artist', limit=8)
+        elif random_handler == 4:
+            response_artist = sp.search(q='genre:trip-hop', type='artist', limit=8)
+        else:
+            pass
         
         artists = response_artist.get('artists', {}).get('items', [])
 
@@ -395,7 +411,7 @@ def artist_data_rapid(data):
 def album_func(request, album_link):
     sp = get_spotify_client()
 
-    response_album_tracks = sp.album_tracks(album_link, limit=1)
+    response_album_tracks = sp.album_tracks(album_link)
     response_album = sp.album(album_link)
     
     album_image = response_album.get('images', [])[0].get('url', {})
@@ -417,5 +433,6 @@ def album_func(request, album_link):
          "track_names": track_names,
          "release_date": album_release
     })
-     
+    
+
 
