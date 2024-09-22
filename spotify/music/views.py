@@ -23,17 +23,24 @@ def index(request):
 
     playlist_names = playlist_data['playlist_names']
     playlist_image = playlist_data['playlist_image']
+    playlist_id = playlist_data['playlist_id']
 
     artist_name = artist_data['artist_names']
     artist_image = artist_data['artist_images'] 
     artist_uri = artist_data['artist_uris'] 
+    
+    sp = get_spotify_client()
+    response_playlists = sp.featured_playlists(limit=14)
+
 
     context = {
         "playlist_names": playlist_names,
         "playlist_image": playlist_image,
+        "playlist_id": playlist_id,
         "artist_name": artist_name,
         "artist_image": artist_image,
         "artist_uri": artist_uri,
+        "test": response_playlists,
         **album_data,
     }
 
@@ -344,10 +351,12 @@ def spotify_playlist():
     playlist_names = [playlist.get('name') for playlist in playlists]       
     playlist_image_data = [playlist.get('images') for playlist in playlists] 
     urls = [item[0]['url'] for item in playlist_image_data]
+    playlist_id = [playlist.get('id') for playlist in playlists]  
 
     playlist_data = {
         'playlist_names': playlist_names,
-        'playlist_image': urls
+        'playlist_image': urls,
+        "playlist_id": playlist_id
     }
 
     return playlist_data
@@ -434,5 +443,11 @@ def album_func(request, album_link):
          "release_date": album_release
     })
     
-
-
+def playlist_page(request, playlist_link):
+    sp = get_spotify_client()
+    playlist_response = sp.playlist(playlist_link)
+    
+    return render(request, "music/playlist.html", context={
+         "playlist_link": playlist_link,
+         "test": playlist_response
+    })
