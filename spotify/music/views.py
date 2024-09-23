@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 from API.spotify import get_spotify_client
 #from API.rapidapi import artist_data
 import sys
+from random import randint
 
 #from django.http import HttpResponse  
 # Create your views here.
@@ -22,17 +23,24 @@ def index(request):
 
     playlist_names = playlist_data['playlist_names']
     playlist_image = playlist_data['playlist_image']
+    playlist_id = playlist_data['playlist_id']
 
     artist_name = artist_data['artist_names']
     artist_image = artist_data['artist_images'] 
     artist_uri = artist_data['artist_uris'] 
+    
+    sp = get_spotify_client()
+    response_playlists = sp.featured_playlists(limit=14)
+
 
     context = {
         "playlist_names": playlist_names,
         "playlist_image": playlist_image,
+        "playlist_id": playlist_id,
         "artist_name": artist_name,
         "artist_image": artist_image,
         "artist_uri": artist_uri,
+        "test": response_playlists,
         **album_data,
     }
 
@@ -162,7 +170,7 @@ def latest_albums():
 
         albums_item_1 = albums[0]
         album_data["artist_name_1"] = albums_item_1['artists'][0]['name']
-        album_data["artist_uri_1"] = albums_item_1['artists'][0]['uri']
+        #album_data["artist_uri_1"] = albums_item_1['artists'][0]['uri']
         album_data["album_name_1"] = albums_item_1['name']
         album_data["album_uri_1"] = albums_item_1["id"]
 
@@ -177,8 +185,9 @@ def latest_albums():
 
         albums_item_2 = albums[1]
         album_data["artist_name_2"] = albums_item_2['artists'][0]['name']
-        album_data["artist_uri_2"] = albums_item_2['artists'][0]['uri']
+        #album_data["artist_uri_2"] = albums_item_2['artists'][0]['uri']
         album_data["album_name_2"] = albums_item_2['name']
+        album_data["album_uri_2"] = albums_item_2["id"]
 
         for image in albums_item_2['images']:
                     if image['height'] == 300:
@@ -191,8 +200,9 @@ def latest_albums():
 
         albums_item_3 = albums[2]
         album_data["artist_name_3"] = albums_item_3['artists'][0]['name']
-        album_data["artist_uri_3"] = albums_item_3['artists'][0]['uri']
+        #album_data["artist_uri_3"] = albums_item_3['artists'][0]['uri']
         album_data["album_name_3"] = albums_item_3['name']
+        album_data["album_uri_3"] = albums_item_3["id"]
 
         for image in albums_item_3['images']:
                     if image['height'] == 300:
@@ -205,8 +215,9 @@ def latest_albums():
 
         albums_item_4 = albums[3]
         album_data["artist_name_4"] = albums_item_4['artists'][0]['name']
-        album_data["artist_uri_4"] = albums_item_4['artists'][0]['uri']
+       # album_data["artist_uri_4"] = albums_item_4['artists'][0]['uri']
         album_data["album_name_4"] = albums_item_4['name']
+        album_data["album_uri_4"] = albums_item_4["id"]
 
         for image in albums_item_4['images']:
                     if image['height'] == 300:
@@ -219,8 +230,9 @@ def latest_albums():
 
         albums_item_5 = albums[4]
         album_data["artist_name_5"] = albums_item_5['artists'][0]['name']
-        album_data["artist_uri_5"] = albums_item_5['artists'][0]['uri']
+       # album_data["artist_uri_5"] = albums_item_5['artists'][0]['uri']
         album_data["album_name_5"] = albums_item_5['name']
+        album_data["album_uri_5"] = albums_item_5["id"]
 
         for image in albums_item_5['images']:
                     if image['height'] == 300:
@@ -234,8 +246,9 @@ def latest_albums():
 
         albums_item_6 = albums[5]
         album_data["artist_name_6"] = albums_item_6['artists'][0]['name']
-        album_data["artist_uri_6"] = albums_item_6['artists'][0]['uri']
+        # album_data["artist_uri_6"] = albums_item_6['artists'][0]['uri']
         album_data["album_name_6"] = albums_item_6['name']
+        album_data["album_uri_6"] = albums_item_6["id"]
 
         for image in albums_item_6['images']:
                     if image['height'] == 300:
@@ -281,9 +294,19 @@ def trending_artist():
     sp = get_spotify_client()
 
     try:
-        
-        response_artist = sp.search(q='genre:pop', type='artist', limit=8)
-
+        random_handler = randint(0, 4)
+        if random_handler == 0:
+            response_artist = sp.search(q='genre:pop', type='artist', limit=8)
+        elif random_handler == 1:
+            response_artist = sp.search(q='genre:alt-rock', type='artist', limit=8)
+        elif random_handler == 2:
+            response_artist = sp.search(q='genre:dance', type='artist', limit=8)
+        elif random_handler == 3:
+            response_artist = sp.search(q='genre:idm', type='artist', limit=8)
+        elif random_handler == 4:
+            response_artist = sp.search(q='genre:trip-hop', type='artist', limit=8)
+        else:
+            pass
         
         artists = response_artist.get('artists', {}).get('items', [])
 
@@ -328,10 +351,12 @@ def spotify_playlist():
     playlist_names = [playlist.get('name') for playlist in playlists]       
     playlist_image_data = [playlist.get('images') for playlist in playlists] 
     urls = [item[0]['url'] for item in playlist_image_data]
+    playlist_id = [playlist.get('id') for playlist in playlists]  
 
     playlist_data = {
         'playlist_names': playlist_names,
-        'playlist_image': urls
+        'playlist_image': urls,
+        "playlist_id": playlist_id
     }
 
     return playlist_data
@@ -394,25 +419,53 @@ def artist_data_rapid(data):
 
 def album_func(request, album_link):
     sp = get_spotify_client()
-    
-    response = sp.album_tracks(album_link, limit=5)
 
-    album_name = response.get('items',{})[0].get('name')
-    album_tracks = []
-    #album_trakcs.append()
+    response_album_tracks = sp.album_tracks(album_link)
+    response_album = sp.album(album_link)
+    
+    album_image = response_album.get('images', [])[0].get('url', {})
+    album_name = response_album.get('name', {})
+    album_artist = response_album.get('artists', [])[0].get('name', {})
+    album_release = response_album.get('release_date', {})
 
     track_names = []
 
-    for item in response.get('items', []):
-        
-        track_name = item.get('name', 'Unknown Track Name')
-        track_names.append(track_name)
+    for item in response_album_tracks.get('items', []):
+         track_name = item.get('name', 'Unknown Track Name')
+         track_names.append(track_name)
 
-        
-    
     return render(request, "music/album.html", context={
-         "track_names": track_names 
+         "image": album_image,
+         "response": response_album,
+         "name": album_name,
+         "artist": album_artist,
+         "track_names": track_names,
+         "release_date": album_release
     })
-     
+    
+def playlist_page(request, playlist_link):
+    sp = get_spotify_client()
+    playlist_response = sp.playlist(playlist_link)
 
-#image, release data, songs, artist name, 
+
+    playlist_name = playlist_response.get('name')
+    playlist_description = playlist_response.get('description')
+    #playlist_data.append([playlist_response.get('name') for item in items])
+    
+    song_names = []
+    for item in playlist_response.get('items', []):
+         song_name = item.get('name', 'not found')
+         song_names.append(song_name)
+         
+    Songs = []
+
+    #playlist_data.append((playlist_name, playlist_description))
+
+    
+    return render(request, "music/playlist.html", context={
+         "playlist_name": playlist_name,
+         "playlist_description": playlist_description,
+         "playlist_data": playlist_response,
+         "song_names": song_names
+
+    })
