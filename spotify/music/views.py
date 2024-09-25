@@ -11,6 +11,10 @@ from API.spotify import get_spotify_client
 import sys
 from random import randint
 from django.http import JsonResponse
+
+from django.views.generic import TemplateView
+
+
 #from .models import Song
 
 #from django.http import HttpResponse  
@@ -504,6 +508,6 @@ def get_song(song_name):
     response_1 = requests.get(url, headers=headers, params=querystring)
     response = response_1.json()
 
-    song_url = response.get("youtubeVideo", {}).get("audio", [])[2].get("url")
+    song_url = response.get("youtubeVideo", {}).get("audio", [])[3].get("url")
     
     return song_url
