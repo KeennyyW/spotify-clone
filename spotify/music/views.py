@@ -11,7 +11,7 @@ from API.spotify import get_spotify_client
 import sys
 from random import randint
 from django.http import JsonResponse
-from .models import Song
+#from .models import Song
 
 #from django.http import HttpResponse  
 # Create your views here.
@@ -60,7 +60,7 @@ def artist_page(request, artist_link):
     top_tracks = artist_top_tracks(artist_link)["tracks"]
     song_image = artist_top_tracks(artist_link)["image"]
     
-    song = get_song(top_tracks[0], artist_data_name)
+    #song = get_song(top_tracks[0], artist_data_name)
     
     top_tracks_image = artist_top_tracks(artist_link)
 
@@ -75,7 +75,7 @@ def artist_page(request, artist_link):
         "top_tracks": top_tracks,
         "song_image": song_image
         
-    }), JsonReso
+    }), JsonResponse({"api_url": song})
     
      
 
@@ -424,6 +424,8 @@ def artist_data_rapid(data):
 def album_func(request, album_link):
     sp = get_spotify_client()
 
+
+
     response_album_tracks = sp.album_tracks(album_link)
     response_album = sp.album(album_link)
     
@@ -438,13 +440,25 @@ def album_func(request, album_link):
          track_name = item.get('name', 'Unknown Track Name')
          track_names.append(track_name)
 
+
+
+
+
+    #handle song data 
+    song_arg = track_name + " " + album_artist
+    song = get_song(song_arg)
+
+
+
+
     return render(request, "music/album.html", context={
          "image": album_image,
          "response": response_album,
          "name": album_name,
          "artist": album_artist,
          "track_names": track_names,
-         "release_date": album_release
+         "release_date": album_release,
+         "song_data": song  
     })
     
 def playlist_page(request, playlist_link):
@@ -480,14 +494,16 @@ def get_song(song_name):
 
     url = "https://spotify-scraper.p.rapidapi.com/v1/track/download"
 
-    querystring = {"track":song_name}
+    querystring = {"track":"song_name"}
 
     headers = {
         "x-rapidapi-key": "cc49d36267msh050e72f34e20be7p1bd57djsne18bef43adb2",
         "x-rapidapi-host": "spotify-scraper.p.rapidapi.com"
     }
 
-    response = requests.get(url, headers=headers, params=querystring)
+    response_1 = requests.get(url, headers=headers, params=querystring)
+    response = response_1.json()
 
+    song_url = response.get("youtubeVideo", {}).get("audio", [])[2].get("url")
     
-    return response
+    return song_url
