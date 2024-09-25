@@ -8,7 +8,7 @@ get necessery data from the spotify API.
 
 fill page with the data the API provides. (Name, top songs (with cover image), maybe discograpy section  )
 
-implement the sraper API for the content that is missing atm: (artist discription, banner).
+implement the sraper API for the content that is missing atm: (artist description, banner).
 
 
 

@@ -496,18 +496,28 @@ def playlist_page(request, playlist_link):
 def get_song(song_name):
      
 
-    url = "https://spotify-scraper.p.rapidapi.com/v1/track/download"
+    # url = "https://spotify-scraper.p.rapidapi.com/v1/track/download"
+    #
+    # querystring = {"track":song_name}
+    #
+    # headers = {
+    #     "x-rapidapi-key": "cc49d36267msh050e72f34e20be7p1bd57djsne18bef43adb2",
+    #     "x-rapidapi-host": "spotify-scraper.p.rapidapi.com"
+    # }
+    #
+    # response_1 = requests.get(url, headers=headers, params=querystring)
+    # response = response_1.json()
+    #
+    # song_url = response.get('youtubeVideo', {}).get('audio', [])[1].get('url')
+    # audio_list = len(response.get('youtubeVideo', {}).get('audio', []))
+    #
+    # return song_url
+    pass
 
-    querystring = {"track":"song_name"}
+def music_player(track,artist_player):
+    pass
 
-    headers = {
-        "x-rapidapi-key": "cc49d36267msh050e72f34e20be7p1bd57djsne18bef43adb2",
-        "x-rapidapi-host": "spotify-scraper.p.rapidapi.com"
-    }
 
-    response_1 = requests.get(url, headers=headers, params=querystring)
-    response = response_1.json()
 
-    song_url = response.get("youtubeVideo", {}).get("audio", [])[3].get("url")
-    
-    return song_url
+
+
