@@ -10,6 +10,8 @@ from API.spotify import get_spotify_client
 #from API.rapidapi import artist_data
 import sys
 from random import randint
+from django.http import JsonResponse
+from .models import Song
 
 #from django.http import HttpResponse  
 # Create your views here.
@@ -58,6 +60,7 @@ def artist_page(request, artist_link):
     top_tracks = artist_top_tracks(artist_link)["tracks"]
     song_image = artist_top_tracks(artist_link)["image"]
     
+    song = get_song(top_tracks[0], artist_data_name)
     
     top_tracks_image = artist_top_tracks(artist_link)
 
@@ -72,7 +75,8 @@ def artist_page(request, artist_link):
         "top_tracks": top_tracks,
         "song_image": song_image
         
-    })
+    }), JsonReso
+    
      
 
 
@@ -469,3 +473,21 @@ def playlist_page(request, playlist_link):
          "song_names": song_names
 
     })
+
+
+def get_song(song_name):
+     
+
+    url = "https://spotify-scraper.p.rapidapi.com/v1/track/download"
+
+    querystring = {"track":song_name}
+
+    headers = {
+        "x-rapidapi-key": "cc49d36267msh050e72f34e20be7p1bd57djsne18bef43adb2",
+        "x-rapidapi-host": "spotify-scraper.p.rapidapi.com"
+    }
+
+    response = requests.get(url, headers=headers, params=querystring)
+
+    
+    return response
