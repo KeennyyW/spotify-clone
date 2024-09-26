@@ -9,10 +9,13 @@ from dotenv import load_dotenv
 from API.spotify import get_spotify_client
 #from API.rapidapi import artist_data
 import sys
-from random import randint
+from random import randint, random
 from django.http import JsonResponse
-
+from django.views.decorators.csrf import csrf_exempt
+from random import randint
 from django.views.generic import TemplateView
+from django.views import View
+
 
 
 #from .models import Song
@@ -379,7 +382,7 @@ def artist():
 
 def test(request): 
     sp = get_spotify_client()
-    response_playlists = sp.featured_playlists(limit=14) 
+    response_playlists = sp.featured_playlists(limit=14)
 
     playlists = response_playlists.get('playlists', {}).get('items', [])
     playlist_names = [playlist.get('name') for playlist in playlists]       
@@ -518,6 +521,9 @@ def music_player(track,artist_player):
     pass
 
 
-
-
-
+def ajax_handler(request, album_link):
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        number = randint(1, 100)
+        return JsonResponse({'number': number})
+    else:
+        return JsonResponse({'error': 'Not an AJAX request'}, status=400)

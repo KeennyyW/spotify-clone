@@ -39,17 +39,22 @@
                             <p class="text-gray-400 w-6 text-center">1</p>
                             <div class="flex items-center">
                                 <!-- Play Button -->
-                                <button type="button" 
+                                <input type="text" id="userInput" placeholder="Type Here: ">
+                                <button type="button"
+                                        id="sendDataBtn"
                                         class="flex items-center justify-center w-8 h-8 rounded-full bg-green-500 text-white hover:bg-blue-600"
-                                        onclick="playTrack('{{ track }}', '{{ artist }}')">
+                                        onclick="getNumber()">
+
                                     <!-- You can replace the SVG with an actual play icon or use an icon library -->
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg class="w-4 h-4" fill="curre ntColor" viewBox="0 0 20 20">
+
                                         <path d="M6 4l10 6-10 6V4z"/>
                                     </svg>
                                 </button>
                                 <div class="ml-2">
                                     <p class="text-base font-medium">{{ track }}</p>
                                     <p class="text-xs text-gray-400">{{ artist }}</p>
+                                    <p class="text-base font-medium" id="responseMessage">Test</p>
                                 </div>
                             </div>
                         </div>

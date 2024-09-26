@@ -1,25 +1,20 @@
-// static/your_app/js/songs.js
-
-$(document).ready(function() {
-    $('.song-item').on('click', function() {
-        var trackName = $(this).data('track-name');
-        var artistName = $(this).data('artist-name');
-
-        $.ajax({
-            url: '/your-backend-url/',  // URL for your backend endpoint
-            type: 'POST',
-            data: {
-                'track_name': trackName,
-                'artist_name': artistName,
-                'csrfmiddlewaretoken': '{{ csrf_token }}'  // You will need to manage CSRF token here
-            },
-            success: function(response) {
-                console.log('Data sent successfully:', response);
-                // Update the UI based on the response
-            },
-            error: function(xhr, status, error) {
-                console.error('Error sending data:', error);
-            }
-        });
+async function getNumber() {
+    let response = await fetch(``, {
+        method: 'GET',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/json'
+        }
     });
-});
+
+    if (!response.ok) {
+        console.error('Error fetching data:', response.statusText);
+        return;
+    }
+
+    let data = await response.json();
+    console.log(data);
+}
+
+// Example call
+getNumber('your_album_link_here');
