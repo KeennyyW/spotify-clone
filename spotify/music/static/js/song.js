@@ -1,5 +1,8 @@
 async function getNumber() {
-    let response = await fetch(``, {
+    
+    console.log('worked')
+
+    let response = await fetch(`ajax`, {
         method: 'GET',
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -17,4 +20,4 @@ async function getNumber() {
 }
 
 // Example call
-getNumber('your_album_link_here');
+//getNumber('your_album_link_here');

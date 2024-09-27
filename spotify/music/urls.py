@@ -14,7 +14,7 @@ urlpatterns = [
     path('playlist/<str:playlist_link>/', views.playlist_page, name="playlist_page"),
     path('get-song-data/<str:song_name>/', views.get_song, name='get_song'),
     path('play/<str:track>/<str:artist_player>', views.music_player, name='music_player'),
-    path('', views.ajax_handler, name='album'),
+    path('album/<str:album_link>/ajax', views.ajax_handler, name='album'),
 
     
     
