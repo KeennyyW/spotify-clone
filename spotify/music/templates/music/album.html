@@ -52,8 +52,10 @@
                                     </svg>
                                 </button>
                                 <div class="ml-2">
-                                    <p class="text-base font-medium">{{ track }}</p>
-                                    <p class="text-xs text-gray-400">{{ artist }}</p>
+                                    
+                                    {% csrf_token %}
+                                    <p class="text-base font-medium" id="track">{{ track }}</p>
+                                    <p class="text-xs text-gray-400" id="artist">{{ artist }}</p>
                                     <p class="text-base font-medium" id="responseMessage">Test</p>
                                 </div>
                             </div>

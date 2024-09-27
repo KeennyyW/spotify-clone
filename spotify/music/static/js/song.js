@@ -1,23 +1,47 @@
-async function getNumber() {
-    
-    console.log('worked')
+// GET REQUEST TEST
 
-    let response = await fetch(`ajax`, {
-        method: 'GET',
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'Content-Type': 'application/json'
-        }
-    });
+
+async function makeRequest(url, method, body ){
+    let headers = {
+         'X-Requested-With': 'XMLHttpRequest',
+         'Content-Type': 'application/json',
+     }
+
+     if (method == "post") {
+         const csrf = document.querySelector('[name=csrfmiddlewaretoken]').value
+         headers['CSRF-Token'] = csrf
+     }
+
+     let response = await fetch("ajax", {
+
+        method: method,
+        headers: headers,
+        body: body
+    })
 
     if (!response.ok) {
         console.error('Error fetching data:', response.statusText);
         return;
     }
 
-    let data = await response.json();
+    return await response.json()
+
+}
+
+async function getNumber() {
+
+    console.log('worked')
+
+    const data = await makeRequest("ajax", "get")
+
     console.log(data);
 }
 
-// Example call
-//getNumber('your_album_link_here');
+async function getName(e) {
+    let name = e.target.innerText
+
+    let data = await makeRequest("ajax", method="post", body=JSON.stringify({number: name}))
+
+    let htmlName = document.getElementById('track')
+
+}
