@@ -468,23 +468,23 @@ def playlist_page(request, playlist_link):
 
 
 def get_song(song_name):
-    # url = "https://spotify-scraper.p.rapidapi.com/v1/track/download"
-    #
-    # querystring = {"track":song_name}
-    #
-    # headers = {
-    #     "x-rapidapi-key": "cc49d36267msh050e72f34e20be7p1bd57djsne18bef43adb2",
-    #     "x-rapidapi-host": "spotify-scraper.p.rapidapi.com"
-    # }
-    #
-    # response_1 = requests.get(url, headers=headers, params=querystring)
-    # response = response_1.json()
-    #
-    # song_url = response.get('youtubeVideo', {}).get('audio', [])[1].get('url')
-    # audio_list = len(response.get('youtubeVideo', {}).get('audio', []))
-    #
-    # return song_url
-    pass
+    url = "https://spotify-scraper.p.rapidapi.com/v1/track/download"
+
+    querystring = {"track":song_name}
+
+    headers = {
+        "x-rapidapi-key": "cc49d36267msh050e72f34e20be7p1bd57djsne18bef43adb2",
+        "x-rapidapi-host": "spotify-scraper.p.rapidapi.com"
+    }
+
+    response_1 = requests.get(url, headers=headers, params=querystring)
+    response = response_1.json()
+
+    song_url = response.get('youtubeVideo', {}).get('audio', [])[1].get('url')
+    audio_list = len(response.get('youtubeVideo', {}).get('audio', []))
+
+    return song_url
+
 
 
 def music_player(track, artist_player):
@@ -492,20 +492,31 @@ def music_player(track, artist_player):
 
 
 def ajax_handler(request, album_link):
-    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        number = randint(1, 100)
-        return JsonResponse({'number': number})
-    else:
-        return JsonResponse({'error': 'Not an AJAX request'}, status=400)
+    if request.method == "POST":
+        data = json.loads(request.body)
+        title = data.get('title')
+        artist = data.get('artist')
+
+        song_data = title + artist
+
+        try:
+            song = get_song(song_data)
+            return JsonResponse({'success': True, 'song_url': song})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': 'Song not found'})
+    return JsonResponse({'success': False, 'error': 'Invalid request'})
 
 
-def ajax_post_handler(request):
-    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        if request.method == 'POST':
-            response = json.loads(request)
-            data = response.get('payload')
 
 
 
+# def ajax_post_handler(request):
+#     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+#         if request.method == 'POST':
+#             response = json.loads(request)
+#             data = response.get('payload')
+#
+#
+#
 
 
