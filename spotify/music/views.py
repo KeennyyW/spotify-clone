@@ -66,12 +66,13 @@ def artist_page(request, artist_link):
     top_tracks = artist_top_tracks(artist_link)["tracks"]
     song_image = artist_top_tracks(artist_link)["image"]
 
-    # song = get_song(top_tracks[0], artist_data_name)
-
     top_tracks_image = artist_top_tracks(artist_link)
 
     rapid_response = artist_data_rapid(artist_link)
     banner = rapid_response[0][1]
+    if banner is None:
+        banner = 'https://placehold.co/600x400?text=RAPID+IS+ASS'
+
 
     return render(request, "music/profile.html", context={
         "artist_name": artist_data_name,
@@ -80,7 +81,7 @@ def artist_page(request, artist_link):
         "top_tracks": top_tracks,
         "song_image": song_image
 
-    }), JsonResponse({"api_url": song})
+    })
 
 
 def login(request):
@@ -478,10 +479,17 @@ def get_song(song_name):
     }
 
     response_1 = requests.get(url, headers=headers, params=querystring)
-    response = response_1.json()
+    data = response_1.json()
 
-    song_url = response.get('youtubeVideo', {}).get('audio', [])[1].get('url')
-    audio_list = len(response.get('youtubeVideo', {}).get('audio', []))
+
+    if data.get(
+            'message') == "You have exceeded the MONTHLY quota for Requests on your current plan, BASIC. Upgrade your plan at https://rapidapi.com/DataFanatic/api/spotify-scraper":
+        song_url = 'Rapid API is ass and wants my money'
+    else:
+
+        song_url = data.get('youtubeVideo', {}).get('audio', [])[1].get('url')
+
+
 
     return song_url
 
@@ -518,5 +526,4 @@ def ajax_handler(request, album_link):
 #
 #
 #
-
 
