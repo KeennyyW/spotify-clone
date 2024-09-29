@@ -1,3 +1,4 @@
+import os
 import json
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -422,7 +423,7 @@ def album_func(request, album_link):
     album_name = response_album.get('name', {})
     album_artist = response_album.get('artists', [])[0].get('name', {})
     album_release = response_album.get('release_date', {})
-
+    audio = f"{settings.MEDIA_URL}songs/Coat%20I%20Would%20Buy.mp3"
     track_names = []
 
     for item in response_album_tracks.get('items', []):
@@ -440,7 +441,8 @@ def album_func(request, album_link):
         "artist": album_artist,
         "track_names": track_names,
         "release_date": album_release,
-        "song_data": song
+        "song_data": song,
+        "audio": audio,
     })
 
 
@@ -486,7 +488,7 @@ def get_song(song_name):
 
     if data.get(
             'message') == "You have exceeded the MONTHLY quota for Requests on your current plan, BASIC. Upgrade your plan at https://rapidapi.com/DataFanatic/api/spotify-scraper":
-        song_url = 'https://file-examples.com/storage/fe58a1f07d66f447a9512f1/2017/11/file_example_MP3_700KB.mp3'
+        song_url = os.path.join(settings.MEDIA_ROOT, 'music', 'Coat I Would Buy.mp3')
     else:
 
         song_url = data.get('youtubeVideo', {}).get('audio', [])[1].get('url')
@@ -506,6 +508,8 @@ def ajax_handler(request, album_link):
         data = json.loads(request.body)
         title = data.get('title')
         artist = data.get('artist')
+
+
 
         song_data = title + artist
 

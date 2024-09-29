@@ -61,27 +61,36 @@
         </div>
 
         <!-- Music Player Section -->
-        <div class="sidebar-section mt-4 bg-gray-900 rounded-md p-4">
-            <h3 class="text-lg font-semibold mb-2">Now Playing</h3>
-            <div class="flex items-center">
-                <img id="album-art" src="https://via.placeholder.com/64" alt="Album Art" class="w-16 h-16 rounded-lg mr-4">
-                <div class="flex-1">
-                    <h3 id="track-title" class="text-md font-semibold">Track Title</h3>
+        <div class="sidebar-section mt-4 bg-gray-900 rounded-md p-6">
+
+            <div class="flex flex-col items-center mb-4">
+                <img id="album-art" src="https://i1.sndcdn.com/artworks-mLPjseCzaa86vlWX-NZi4Xg-t500x500.jpg" alt="Album Art" class="w-40 h-40 rounded-lg mb-4">
+                <div class="text-center mb-4">
+                    <h3 id="track-title" class="text-lg font-semibold">Track Title</h3>
                     <p id="track-artist" class="text-gray-400 text-sm">Artist Name</p>
                 </div>
-                <button id="play-button" class="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-3 rounded-full">
+                <button id="play-button" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full ">
                     Play
                 </button>
             </div>
+            <div class="relative mb-4 w-full">
+                <input id="time-bar" type="range" min="0" max="100" value="0" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+                <div class="flex justify-between text-xs text-gray-400 mt-1">
+                    <span id="current-time">0:00</span>
+                    <span id="duration">3:30</span> <!-- Change to your track's duration -->
+                </div>
+            </div>
             <audio id="audio-player">
-                <source id="audio-source" src="" type="audio/mpeg">
+                <source id="audio-source" src="{{ audio }}" type="audio/mpeg">
                 Your browser does not support the audio element.
             </audio>
         </div>
+
+
     </div>
 
     <div class="flex-1 ml-64 p-6">
-        <header class="header-container mb-6 bg-gray-900">
+        <header class="header-container mb-6 bg-gray-900 rounded-xl">
             <div class="search-bar flex items-center space-x-2 bg-gray-800 p-2 rounded-lg border border-gray-700">
                 <input type="search" placeholder="What do you want to listen to?" aria-label="Search" class="bg-gray-800 text-gray-100 placeholder-gray-400 w-full p-2 rounded-l-lg focus:outline-none focus:ring-2 focus:bg-slate-950">
                 <button type="submit" aria-label="Search" class="bg-slate-950 px-4 py-2 rounded-r-lg text-gray-100 hover:bg-slate-950">
@@ -91,9 +100,16 @@
             <div class="search-title text-2xl font-semibold mt-4">Top Artists</div>
         </header>
 
+        <button class="bg-slate-950 px-4 py-2 rounded-r-lg text-gray-100 hover:bg-slate-950">
+
+
+        </button>
+
         <!-- Content Section -->
         {% block body %}
         {% endblock %}
+
+
     </div>
     
 </body>

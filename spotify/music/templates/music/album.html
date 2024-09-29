@@ -39,16 +39,18 @@
                                 <p class="text-gray-400 w-6 text-center">1</p>
                                 <div class="flex items-center">
                                     <!-- Play Button -->
-                                    <input type="text" id="userInput" placeholder="Type Here: ">
+
                                     <button type="button"
-                                            class="flex items-center justify-center w-8 h-8 rounded-full bg-green-500 text-white hover:bg-blue-600 play-button"
+                                            class="flex items-center justify-center w-10 h-10 rounded-full bg-green-500 text-white hover:bg-green-800 focus:outline-none play-button active:scale-90 transition-all duration-150 ease-in-out"
                                             data-track="{{ track }}"
                                             data-artist="{{ artist }}">
                     
                                         <!-- Play Icon -->
-                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M6 4l10 6-10 6V4z"/>
+                                        <div class="w-6 h-6">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                          <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
                                         </svg>
+                                        </div>
                                     </button>
                                     <div class="ml-2">
                                         {% csrf_token %}
@@ -61,16 +63,19 @@
                             <div class="text-gray-400">3:59</div>
                         </div>
                     {% endfor %}
+            
+            
+            
+            <audio controls>
+                <source src="{{ audio }}" type="audio/mpeg">
+                        Your browser does not support the audio tag.
+             </audio>
 
 
-
+    
 
                 
-                <div> 
-                    <p>
-                        {{ song_data }}
-                    </p>
-                </div>
+              
                 
             </div>
             </div>
