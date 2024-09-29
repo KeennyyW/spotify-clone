@@ -17,6 +17,8 @@ from random import randint
 from django.views.generic import TemplateView
 from django.views import View
 
+rapid_key = settings.RAPID_API_KEY
+
 
 # from .models import Song
 
@@ -392,7 +394,7 @@ def artist_data_rapid(data):
     querystring = {"artistId": formatted_data}
 
     headers = {
-        "x-rapidapi-key": "cc49d36267msh050e72f34e20be7p1bd57djsne18bef43adb2",
+        "x-rapidapi-key": rapid_key,
         "x-rapidapi-host": "spotify-scraper.p.rapidapi.com"
     }
 
@@ -474,7 +476,7 @@ def get_song(song_name):
     querystring = {"track":song_name}
 
     headers = {
-        "x-rapidapi-key": "cc49d36267msh050e72f34e20be7p1bd57djsne18bef43adb2",
+        "x-rapidapi-key": rapid_key,
         "x-rapidapi-host": "spotify-scraper.p.rapidapi.com"
     }
 
@@ -484,7 +486,7 @@ def get_song(song_name):
 
     if data.get(
             'message') == "You have exceeded the MONTHLY quota for Requests on your current plan, BASIC. Upgrade your plan at https://rapidapi.com/DataFanatic/api/spotify-scraper":
-        song_url = 'Rapid API is ass and wants my money'
+        song_url = 'https://file-examples.com/storage/fe58a1f07d66f447a9512f1/2017/11/file_example_MP3_700KB.mp3'
     else:
 
         song_url = data.get('youtubeVideo', {}).get('audio', [])[1].get('url')
