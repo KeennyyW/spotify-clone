@@ -8,6 +8,7 @@
     <title>{% block title %}{% endblock %}</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{% static 'js/song.js' %}"></script>
+    <script src="{% static 'js/player.js' %}"></script>   
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.4/dist/tailwind.min.css" rel="stylesheet">
 </head>
@@ -70,7 +71,7 @@
                     <p id="track-artist" class="text-gray-400 text-sm">Artist Name</p>
                 </div>
                 <button id="play-button" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full ">
-                    Play
+                    Pause
                 </button>
             </div>
             <div class="relative mb-4 w-full">
