@@ -1,7 +1,7 @@
 
-songUrl = window.songUrl
-artist = window.artist
-songName = window.track
+songUrl = await window.songUrl
+artist = await window.artist
+songName = await window.track
 
 
 document.addEventListener('DOMContentLoaded', function () {
