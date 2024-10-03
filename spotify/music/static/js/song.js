@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', function () {
             window.track = this.getAttribute('data-track');
             window.artist = this.getAttribute('data-artist');
             const csrf = document.querySelector('[name=csrfmiddlewaretoken]').value;
-            console.log(track, artist);
-            console.log("Hello");
+            console.log(track, artist)
+            console.log("Hello")
 
             fetch('ajax', {
             method: 'POST',

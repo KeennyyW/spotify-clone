@@ -1,16 +1,17 @@
 
-songUrl = await window.songUrl
-artist = await window.artist
-songName = await window.track
+songUrl = window.songUrl
+artist = window.artist
+songName = window.track
 
 
 document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.play-button').forEach(button => {
           button.addEventListener('click', function () {
-            console.log('Hello World')
+              console.log('Hello World')
+              song_prefix = songUrl.replace(" C:\\VsCode\\spotify\\spotify-clone\\spotify", "");
 
-          console.log(songUrl, songName, artist)
-
+          console.log(song_prefix, songName, artist)
+              console.log('hello sdsds')
 
           })
   })
