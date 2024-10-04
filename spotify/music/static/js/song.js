@@ -24,21 +24,14 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    window.songUrl = data.song_url;
-                    // const responseMassage = this.parentElement.querySelector('.responseMassage');
-                    // responseMassage.textContent = songUrl;
+                    window.songUrl = data.song_url
                     console.log('Song Url: ', songUrl)
-
                 }
                 else {
                     console.error('Error fetching')
                 }
             })
                 // .catch(error => console.error('Error:', error));
-
-
-
-
 
 
         });

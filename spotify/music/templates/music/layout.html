@@ -67,18 +67,18 @@
             <div class="flex flex-col items-center mb-4">
                 <img id="album-art" src="https://i1.sndcdn.com/artworks-mLPjseCzaa86vlWX-NZi4Xg-t500x500.jpg" alt="Album Art" class="w-40 h-40 rounded-lg mb-4">
                 <div class="text-center mb-4">
-                    <h3 id="track-title" class="text-lg font-semibold">Track Title</h3>
-                    <p id="track-artist" class="text-gray-400 text-sm">Artist Name</p>
+                    <h3 id="track-title" class=" track-title text-lg font-semibold">Track Title</h3>
+                    <p id="track-artist" class=" track-artist text-gray-400 text-sm">Artist Name</p>
                 </div>
-                <button id="play-button" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full ">
+                <button class=" play-button bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full ">
                     Pause
                 </button>
             </div>
             <div class="relative mb-4 w-full">
-                <input id="time-bar" type="range" min="0" max="100" value="0" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+                <input onchange="seekTo()" type="range" min="0" max="100" value="0" class=" seek_slider w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer" >
                 <div class="flex justify-between text-xs text-gray-400 mt-1">
-                    <span id="current-time">0:00</span>
-                    <span id="duration">3:30</span> <!-- Change to your track's duration -->
+                    <span class="current-time">0:00</span>
+                    <span class="total-duration">3:30</span> <!-- Change to your track's duration -->
                 </div>
             </div>
             <audio id="audio-player">

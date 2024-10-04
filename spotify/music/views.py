@@ -452,7 +452,6 @@ def playlist_page(request, playlist_link):
 
     playlist_name = playlist_response.get('name')
     playlist_description = playlist_response.get('description')
-    # playlist_data.append([playlist_response.get('name') for item in items])
 
     song_names = []
     for item in playlist_response.get('items', []):
@@ -461,7 +460,7 @@ def playlist_page(request, playlist_link):
 
     Songs = []
 
-    # playlist_data.append((playlist_name, playlist_description))
+
 
     return render(request, "music/playlist.html", context={
         "playlist_name": playlist_name,
@@ -486,9 +485,9 @@ def get_song(song_name):
     data = response_1.json()
 
 
-    if data.get(
-            'message') == "You have exceeded the MONTHLY quota for Requests on your current plan, BASIC. Upgrade your plan at https://rapidapi.com/DataFanatic/api/spotify-scraper":
-        song_url = os.path.join(settings.MEDIA_ROOT, 'music', 'Coat I Would Buy.mp3')
+    if data.get('message') == "You have exceeded the MONTHLY quota for Requests on your current plan, BASIC. Upgrade your plan at https://rapidapi.com/DataFanatic/api/spotify-scraper":
+            song_url_prefix = os.path.join(settings.MEDIA_ROOT, 'music', 'Coat I Would Buy.mp3')
+            song_url = 'https://audio.jukehost.co.uk/jmpzY52yTaTiDuxL8Y1WZlvwyRnozwR4'
     else:
 
         song_url = data.get('youtubeVideo', {}).get('audio', [])[1].get('url')
@@ -508,9 +507,6 @@ def ajax_handler(request, album_link):
         data = json.loads(request.body)
         title = data.get('title')
         artist = data.get('artist')
-
-
-
         song_data = title + artist
 
         try:
@@ -521,15 +517,4 @@ def ajax_handler(request, album_link):
     return JsonResponse({'success': False, 'error': 'Invalid request'})
 
 
-
-
-
-# def ajax_post_handler(request):
-#     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-#         if request.method == 'POST':
-#             response = json.loads(request)
-#             data = response.get('payload')
-#
-#
-#
 
